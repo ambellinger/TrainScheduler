@@ -107,5 +107,5 @@ $("#add-train-btn").on("click", function(event) {
     );
   
     // Append the new row to the table
-    $("#train-table > tbody").append(newRow);
+    $("tbody").append(newRow);
   });
