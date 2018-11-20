@@ -19,7 +19,7 @@ $("#add-train-btn").on("click", function(event) {
     // Grabs user input
     var trainName = $("#train-name-input").val().trim();
     var destination = $("#destination-input").val().trim();
-    var frequency = moment($("#frequency-input").val().trim(), "MM/DD/YYYY").format("X");
+    var frequency = $("#frequency-input").val().trim();
     var firstTrain = $("#first-train-input").val().trim();
   
     // Creates local "temporary" object for holding train data
@@ -64,23 +64,37 @@ $("#add-train-btn").on("click", function(event) {
     console.log(frequency);
     console.log(firstTrain);
   
-    ////////MOMENT STUFF/////////////////
-    // Prettify the employee start
+    ////////MOMENT STUFF///////
+    // Current Time
+      var currentTime = moment();
+      console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
-    //Determine the next time of Arrival
-    var nextTimeOfArrival = moment.unix(empStart).format("MM/DD/YYYY");
-  
-    // // Calculate the months worked using hardcore math
-    // // To calculate the months worked
-     var empMonths = moment().diff(moment(empStart, "X"), "months");
-     console.log(empMonths);
-  
-    // // Calculate the total billed rate
-     var empBilled = empMonths * empRate;
-     console.log(empBilled);
-  ////////MOMENT STUFF/////////////////
+    //convert the first time input into a variable
+    var firstTime = firstTrain;
 
+    //Covert the first time string into actual time
+    var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
+    
+    //Take the difference between the current time and the first time. This is basically saying how many
+            //minutes have passed between the first time the train left and now
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
 
+    //Time apart (remainder). 
+    var tRemainder = diffTime % frequency;
+    console.log(tRemainder);
+
+    //Minutes until arrival
+    var tMinutesTillTrain = frequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    //Next Train
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes").format("hh:mm");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+    
+    
+  ////////TABLE STUFF//////////
 
 
     // Create the new row
@@ -88,8 +102,8 @@ $("#add-train-btn").on("click", function(event) {
       $("<td>").text(trainName),
       $("<td>").text(destination),
       $("<td>").text(frequency),
-      $("<td>").text("Next Arrival Time"),
-      $("<td>").text("Minutes Away")
+      $("<td>").text(nextTrain),
+      $("<td>").text(tMinutesTillTrain)
     );
   
     // Append the new row to the table
