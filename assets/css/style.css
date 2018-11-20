@@ -2,3 +2,38 @@
     td {
       width: 16.575%;
     }
+
+
+h1 {
+    font-size: 50px;
+    padding: 10px;
+}
+
+h3 {
+    font-size: 25;
+    font-style: italic;
+}
+
+body {
+    font-family: 'Inconsolata', monospace;
+    background-color: #F2F4F4  ;
+    
+ 
+}
+
+.jumbotron {
+    background-color: #2E4053;
+    color: white;
+}
+
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #2E4053;
+    color: white;
+  }
+
+.card-header {
+    background-color: #AEB6BF;
+    color: white;
+
+}
